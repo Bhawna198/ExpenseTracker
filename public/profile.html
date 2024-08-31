@@ -1,12 +1,193 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>Welcome To Profile Page</h1>
-    <a href="/logout"><button >LOGOUT</button></a>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Expense Management System</title>
+    <link rel="stylesheet" href="styles.css">
+    <button onclick="location.href='profile2.html'">View Dashboard</button>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <nav style="background-color: #333; padding: 10px;">
+      <a href="profile.html" style="color: white; margin-right: 20px;">Add Transaction</a>
+      <a href="profile2.html" style="color: white;">View Dashboard</a>
+  </nav>
+  
+    <style>
+      body {
+        font-family: 'Poppins', sans-serif;
+        background-color: #1a1a1a;
+        color: #fff;
+        margin: 0;
+        padding: 20px;
+      }
+      h1 {
+        text-align: center;
+      }
+      .transaction-table {
+        width: 100%;
+        margin-top: 20px;
+        border-collapse: collapse;
+      }
+      .transaction-table th, .transaction-table td {
+        border: 1px solid #ddd;
+        padding: 10px;
+        text-align: left;
+      }
+      .transaction-table th {
+        background-color: #333;
+      }
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.8);
+        padding-top: 60px;
+      }
+      .modal-content {
+        background-color: #fefefe;
+        margin: 5% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+        max-width: 500px;
+        color: #000;
+      }
+      .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+      }
+      .close:hover,
+      .close:focus {
+        color: #000;
+        text-decoration: none;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Expense Management System</h1>
+    <button id="addTransactionBtn">Add New Transaction</button>
+    
+    <div class="modal" id="transactionModal">
+      <div class="modal-content">
+        <span class="close" id="closeModal">&times;</span>
+        <h2>Add Transaction Details</h2>
+        <form id="transactionForm">
+          <label for="title">Title</label>
+          <input type="text" id="title" name="title" required>
+          
+          <label for="amount">Amount</label>
+          <input type="number" id="amount" name="amount" required>
+          
+          <label for="category">Category</label>
+          <select id="category" name="category" required>
+            <option value="Food">Food</option>
+            <option value="Salary">Salary</option>
+            <option value="Utilities">Utilities</option>
+            <option value="Other">Other</option>
+          </select>
+          
+          <label for="description">Description</label>
+          <input type="text" id="description" name="description">
+          
+          <label for="type">Transaction Type</label>
+          <select id="type" name="type" required>
+            <option value="Income">Income</option>
+            <option value="Expense">Expense</option>
+          </select>
+          
+          <label for="date">Date</label>
+          <input type="date" id="date" name="date" required>
+          
+          <button type="submit">Submit</button>
+        </form>
+      </div>
+    </div>
+    
+    <table class="transaction-table">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Title</th>
+          <th>Category</th>
+          <th>Amount</th>
+          <th>Type</th>
+        </tr>
+      </thead>
+      <tbody id="transactionList"></tbody>
+    </table>
+    
+    <script>
+      const transactionModal = document.getElementById("transactionModal");
+      const addTransactionBtn = document.getElementById("addTransactionBtn");
+      const closeModal = document.getElementById("closeModal");
+      const transactionForm = document.getElementById("transactionForm");
+      const transactionList = document.getElementById("transactionList");
+
+      addTransactionBtn.onclick = function() {
+        transactionModal.style.display = "block";
+      }
+
+      closeModal.onclick = function() {
+        transactionModal.style.display = "none";
+      }
+
+      window.onclick = function(event) {
+        if (event.target == transactionModal) {
+          transactionModal.style.display = "none";
+        }
+      }
+
+      transactionForm.onsubmit = function(event) {
+        event.preventDefault();
+        const formData = new FormData(transactionForm);
+        const transaction = {
+          date: formData.get("date"),
+          title: formData.get("title"),
+          category: formData.get("category"),
+          amount: formData.get("amount"),
+          type: formData.get("type"),
+          description: formData.get("description")
+        };
+
+        // Store in localStorage
+        const transactions = JSON.parse(localStorage.getItem("transactions")) || [];
+        transactions.push(transaction);
+        localStorage.setItem("transactions", JSON.stringify(transactions));
+
+        // Update the transaction list
+        addTransactionToTable(transaction);
+        transactionModal.style.display = "none";
+        transactionForm.reset();
+      }
+
+      function addTransactionToTable(transaction) {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${transaction.date}</td>
+          <td>${transaction.title}</td>
+          <td>${transaction.category}</td>
+          <td>${transaction.amount}</td>
+          <td>${transaction.type}</td>
+        `;
+        transactionList.appendChild(row);
+      }
+
+      function loadTransactions() {
+        const transactions = JSON.parse(localStorage.getItem("transactions")) || [];
+        transactions.forEach(addTransactionToTable);
+      }
+
+      // Load existing transactions
+      loadTransactions();
+    </script>
+  </body>
 </html>
+
