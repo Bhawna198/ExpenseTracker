@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -198,4 +198,257 @@
   </body>
 </html>
 
- 
+  -->
+
+  <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Expense Management System</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-image: url('images/4.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            font-family: 'Poppins', sans-serif;
+            color: #000;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        .transaction-table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+        .transaction-table th, .transaction-table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+            color: #000;
+        }
+        .transaction-table th {
+            background-color: #e8a1e0;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding-top: 60px;
+        }
+        .modal-content {
+            background-color: #fff;
+            margin: 5% auto;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 500px;
+            color: #333;
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        .modal-header h2 {
+            margin: 0;
+            font-size: 1.5em;
+        }
+        .close {
+            color: #aaa;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        .close:hover {
+            color: #000;
+        }
+        form {
+            display: grid;
+            gap: 15px;
+        }
+        label {
+            font-weight: 500;
+        }
+        input, select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button[type="submit"] {
+            background-color: #e8a1e0;
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            font-size: 1em;
+            cursor: pointer;
+        }
+        button[type="submit"]:hover {
+            background-color: #d47ac5;
+        }
+        nav {
+            background-color: #e8a1e0;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+        nav a {
+            color: white;
+            margin-right: 20px;
+            text-decoration: none;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        #addTransactionBtn {
+            background-color: #e8a1e0;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            font-size: 1em;
+            cursor: pointer;
+        }
+        #addTransactionBtn:hover {
+            background-color: #d47ac5;
+        }
+    </style>
+</head>
+<body>
+    <h1>Expense Management System</h1>
+    <button id="addTransactionBtn">Add New Transaction</button>
+    
+    <div class="modal" id="transactionModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Add Transaction Details</h2>
+                <span class="close" id="closeModal">&times;</span>
+            </div>
+            <form id="transactionForm">
+                <label for="title">Title</label>
+                <input type="text" id="title" name="title" required>
+                
+                <label for="amount">Amount</label>
+                <input type="number" id="amount" name="amount" required>
+                
+                <label for="category">Category</label>
+                <select id="category" name="category" required>
+                    <option value="Food">Food</option>
+                    <option value="Salary">Salary</option>
+                    <option value="Utilities">Utilities</option>
+                    <option value="Other">Other</option>
+                </select>
+                
+                <label for="description">Description</label>
+                <input type="text" id="description" name="description">
+                
+                <label for="type">Transaction Type</label>
+                <select id="type" name="type" required>
+                    <option value="Income">Income</option>
+                    <option value="Expense">Expense</option>
+                </select>
+                
+                <label for="date">Date</label>
+                <input type="date" id="date" name="date" required>
+                
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+    
+    <table class="transaction-table">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Title</th>
+                <th>Category</th>
+                <th>Amount</th>
+                <th>Type</th>
+            </tr>
+        </thead>
+        <tbody id="transactionList"></tbody>
+    </table>
+    
+    <script>
+        const transactionModal = document.getElementById("transactionModal");
+        const addTransactionBtn = document.getElementById("addTransactionBtn");
+        const closeModal = document.getElementById("closeModal");
+        const transactionForm = document.getElementById("transactionForm");
+        const transactionList = document.getElementById("transactionList");
+
+        addTransactionBtn.onclick = function() {
+            transactionModal.style.display = "block";
+        }
+
+        closeModal.onclick = function() {
+            transactionModal.style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            if (event.target == transactionModal) {
+                transactionModal.style.display = "none";
+            }
+        }
+
+        transactionForm.onsubmit = function(event) {
+            event.preventDefault();
+            const formData = new FormData(transactionForm);
+            const transaction = {
+                date: formData.get("date"),
+                title: formData.get("title"),
+                category: formData.get("category"),
+                amount: formData.get("amount"),
+                type: formData.get("type"),
+                description: formData.get("description")
+            };
+
+            // Store in localStorage
+            const transactions = JSON.parse(localStorage.getItem("transactions")) || [];
+            transactions.push(transaction);
+            localStorage.setItem("transactions", JSON.stringify(transactions));
+
+            // Update the transaction list
+            addTransactionToTable(transaction);
+            transactionModal.style.display = "none";
+            transactionForm.reset();
+        }
+
+        function addTransactionToTable(transaction) {
+            const row = document.createElement("tr");
+            row.innerHTML = `
+                <td>${transaction.date}</td>
+                <td>${transaction.title}</td>
+                <td>${transaction.category}</td>
+                <td>${transaction.amount}</td>
+                <td>${transaction.type}</td>
+            `;
+            transactionList.appendChild(row);
+        }
+
+        function loadTransactions() {
+            const transactions = JSON.parse(localStorage.getItem("transactions")) || [];
+            transactions.forEach(addTransactionToTable);
+        }
+
+        // Load existing transactions
+        loadTransactions();
+    </script>
+</body>
+</html>
