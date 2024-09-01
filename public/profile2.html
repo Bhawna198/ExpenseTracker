@@ -1,193 +1,38 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Expense Management System</title>
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <nav style="background-color: #333; padding: 10px;">
-        <a href="profile.html" style="color: white; margin-right: 20px;">Add Transaction</a>
-        <a href="profile2.html" style="color: white;">View Dashboard</a>
-    </nav>
-    
-    <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #1a1a1a;
-            color: #fff;
-            margin: 0;
-            padding: 20px;
-            text-align: center;
-        }
 
-        .container {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
-            max-width: 1200px;
-            margin: auto;
-        }
-
-        .box {
-            background-color: #333;
-            padding: 20px;
-            border-radius: 8px;
-        }
-
-        .box h2 {
-            margin-top: 0;
-            font-size: 20px;
-        }
-
-        .box .percentage {
-            font-size: 24px;
-            font-weight: bold;
-        }
-
-        .percentage-circle {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100px;
-            width: 100px;
-            border-radius: 50%;
-            background-color: #444;
-            margin: 20px auto;
-            color: #fff;
-        }
-
-        .category {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 10px;
-        }
-
-        .category-bar {
-            width: 100%;
-            height: 10px;
-            background-color: #555;
-            border-radius: 5px;
-            margin-left: 10px;
-        }
-
-        .bar-fill {
-            height: 10px;
-            border-radius: 5px;
-        }
-
-        .category p {
-            margin: 0;
-        }
-
-        .actions {
-            margin-top: 20px;
-        }
-
-        .actions button {
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .actions button:hover {
-            background-color: #0056b3;
-        }
-    </style>
-</head>
-<body>
-    <h1>Expense Management System</h1>
-
-    <div class="actions">
-        <button onclick="location.href='profile.html'">Add New</button>
-        <button onclick="resetFilter()">Reset Filter</button>
-    </div>
-
-    <div class="container">
-        <div class="box">
-            <h2>Total Transactions: <span id="totalTransactions">0</span></h2>
-            <div class="percentage-circle">
-                <div class="percentage" id="incomePercentage">0%</div>
+        <!-- <a href="profile.html" style="color: white; margin-right: 20px;">Add Transaction</a>
+        <a href="profile2.html" style="color: white;">View Dashboard</a> -->
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Expense Management System</title>
+            <link rel="stylesheet" href="styles.css">
+            <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+            <style>
+                /* Optional additional styling if needed */
+            </style>
+        </head>
+        <body>
+            <nav style="background-color: #333; padding: 10px;">
+                <a href="profile.html" style="color: white; margin-right: 20px;">Add Transaction</a>
+                <a href="profile2.html" style="color: white;">View Dashboard</a>
+            </nav>
+        
+            <h1>Expense Management System</h1>
+        
+            <div class="actions">
+                <button onclick="location.href='profile.html'">Add New</button>
+                <button onclick="resetFilter()">Reset Filter</button>
             </div>
-            <p>Income: <span id="incomeCount">0</span></p>
-            <p>Expense: <span id="expenseCount">0</span></p>
-        </div>
-
-        <div class="box">
-            <h2>Total Turnover: <span id="totalTurnover">0</span></h2>
-            <div class="percentage-circle">
-                <div class="percentage" id="turnoverPercentage">0%</div>
-            </div>
-            <p>Income: <span id="totalIncome">0</span></p>
-            <p>Expense: <span id="totalExpense">0</span></p>
-        </div>
-
-        <div class="box">
-            <h2>Category-wise Income</h2>
-            <div id="incomeCategories"></div>
-        </div>
-
-        <div class="box">
-            <h2>Category-wise Expense</h2>
-            <div id="expenseCategories"></div>
-        </div>
-    </div>
-
-    <script>
-        function loadDashboardData() {
-            const transactions = JSON.parse(localStorage.getItem('transactions')) || [];
-            let totalIncome = 0, totalExpense = 0, incomeCount = 0, expenseCount = 0;
-            const incomeCategories = {}, expenseCategories = {};
-
-            transactions.forEach(transaction => {
-                const amount = parseFloat(transaction.amount);
-                if (transaction.type === 'Income') {
-                    totalIncome += amount;
-                    incomeCount++;
-                    incomeCategories[transaction.category] = (incomeCategories[transaction.category] || 0) + amount;
-                } else {
-                    totalExpense += amount;
-                    expenseCount++;
-                    expenseCategories[transaction.category] = (expenseCategories[transaction.category] || 0) + amount;
-                }
-            });
-
-            const totalTransactions = incomeCount + expenseCount;
-            const turnover = totalIncome + totalExpense;
-            const incomePercentage = totalTransactions ? (incomeCount / totalTransactions * 100).toFixed(0) : 0;
-            const turnoverPercentage = turnover ? (totalIncome / turnover * 100).toFixed(0) : 0;
-
-            document.getElementById('totalTransactions').innerText = totalTransactions;
-            document.getElementById('incomeCount').innerText = incomeCount;
-            document.getElementById('expenseCount').innerText = expenseCount;
-            document.getElementById('totalTurnover').innerText = turnover;
-            document.getElementById('totalIncome').innerText = totalIncome;
-            document.getElementById('totalExpense').innerText = totalExpense;
-            document.getElementById('incomePercentage').innerText = incomePercentage + '%';
-            document.getElementById('turnoverPercentage').innerText = turnoverPercentage + '%';
-
-            renderCategoryBars(incomeCategories, 'incomeCategories');
-            renderCategoryBars(expenseCategories, 'expenseCategories');
-        }
-
-        function renderCategoryBars(categories, containerId) {
-            const container = document.getElementById(containerId);
-            container.innerHTML = '';
-
-            const total = Object.values(categories).reduce((sum, value) => sum + value, 0);
-
-            for (const [category, amount] of Object.entries(categories)) {
-                const percentage = ((amount / total) * 100).toFixed(2);
-                container.innerHTML += `
-                    <div class="category">
-                        <p>${category}: ${percentage}%</p>
-                        <div class="category-bar">
-                            <div class="bar-fill" style="width: ${percentage}%; background-color: ${getCategoryColor(category)};"></div>
-                        </div>
+        
+            <div class="container">
+                <div class="box">
+                    <h2>Total Transactions: <span id="totalTransactions">0</span></h2>
+                    <div class="percentage-circle">
+                        <div class="percentage" id="incomePercentage">0%</div>
                     </div>
+<<<<<<< HEAD
                 `;
             }
         }
@@ -213,3 +58,106 @@
 </body>
 </html>
 
+=======
+                    <p>Income: <span id="incomeCount">0</span></p>
+                    <p>Expense: <span id="expenseCount">0</span></p>
+                </div>
+        
+                <div class="box">
+                    <h2>Total Turnover: <span id="totalTurnover">0</span></h2>
+                    <div class="percentage-circle">
+                        <div class="percentage" id="turnoverPercentage">0%</div>
+                    </div>
+                    <p>Income: <span id="totalIncome">0</span></p>
+                    <p>Expense: <span id="totalExpense">0</span></p>
+                </div>
+        
+                <div class="box">
+                    <h2>Category-wise Income</h2>
+                    <div id="incomeCategories"></div>
+                </div>
+        
+                <div class="box">
+                    <h2>Category-wise Expense</h2>
+                    <div id="expenseCategories"></div>
+                </div>
+            </div>
+        
+            <script>
+                function loadDashboardData() {
+                    const transactions = JSON.parse(localStorage.getItem('transactions')) || [];
+                    let totalIncome = 0, totalExpense = 0, incomeCount = 0, expenseCount = 0;
+                    const incomeCategories = {}, expenseCategories = {};
+        
+                    transactions.forEach(transaction => {
+                        const amount = parseFloat(transaction.amount);
+                        if (transaction.type === 'Income') {
+                            totalIncome += amount;
+                            incomeCount++;
+                            incomeCategories[transaction.category] = (incomeCategories[transaction.category] || 0) + amount;
+                        } else {
+                            totalExpense += amount;
+                            expenseCount++;
+                            expenseCategories[transaction.category] = (expenseCategories[transaction.category] || 0) + amount;
+                        }
+                    });
+        
+                    const totalTransactions = incomeCount + expenseCount;
+                    const turnover = totalIncome + totalExpense;
+                    const incomePercentage = totalTransactions ? (incomeCount / totalTransactions * 100).toFixed(0) : 0;
+                    const turnoverPercentage = turnover ? (totalIncome / turnover * 100).toFixed(0) : 0;
+        
+                    document.getElementById('totalTransactions').innerText = totalTransactions;
+                    document.getElementById('incomeCount').innerText = incomeCount;
+                    document.getElementById('expenseCount').innerText = expenseCount;
+                    document.getElementById('totalTurnover').innerText = turnover;
+                    document.getElementById('totalIncome').innerText = totalIncome;
+                    document.getElementById('totalExpense').innerText = totalExpense;
+                    document.getElementById('incomePercentage').innerText = incomePercentage + '%';
+                    document.getElementById('turnoverPercentage').innerText = turnoverPercentage + '%';
+        
+                    renderCategoryBars(incomeCategories, 'incomeCategories');
+                    renderCategoryBars(expenseCategories, 'expenseCategories');
+                }
+        
+                function renderCategoryBars(categories, containerId) {
+                    const container = document.getElementById(containerId);
+                    container.innerHTML = '';
+        
+                    const total = Object.values(categories).reduce((sum, value) => sum + value, 0);
+        
+                    for (const [category, amount] of Object.entries(categories)) {
+                        const percentage = ((amount / total) * 100).toFixed(2);
+                        container.innerHTML += `
+                            <div class="category">
+                                <p>${category}: ${percentage}%</p>
+                                <div class="category-bar">
+                                    <div class="bar-fill" style="width: ${percentage}%; background-color: ${getCategoryColor(category)};"></div>
+                                </div>
+                            </div>
+                        `;
+                    }
+                }
+        
+                function getCategoryColor(category) {
+                    const colors = {
+                        'Salary': '#ffcc00',
+                        'Food': '#00cc66',
+                        'Utilities': '#00cccc',
+                        'Other': '#cc0000'
+                    };
+                    return colors[category] || '#fff';
+                }
+        
+                function resetFilter() {
+                    localStorage.removeItem('transactions');
+                    loadDashboardData();
+                }
+        
+                // Initialize dashboard data on load
+                loadDashboardData();
+            </script>
+        </body>
+        </html>
+        
+>>>>>>> c4ee19f1eaa06e57d3224adf864e847f36b0026d
