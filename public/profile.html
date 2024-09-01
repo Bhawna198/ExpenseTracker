@@ -1,4 +1,4 @@
-<!-- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -12,7 +12,7 @@
       <a href="profile2.html" style="color: white;">View Dashboard</a>
   </nav>
   
-    <style>
+    <!-- <style>
       body {
         background-image: url('images/4.jpg');
         background-size: cover; /* This ensures the background covers the entire page */
@@ -76,7 +76,113 @@
         text-decoration: none;
         cursor: pointer;
       }
+    </style> -->
+
+    <style>
+      /* Existing styles */
+      body {
+        background-image: url('images/4.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        font-family: 'Poppins', sans-serif;
+        background-color: #e8a1e0;
+        color: #000;
+        margin: 0;
+        padding: 20px;
+      }
+      h1 {
+        text-align: center;
+      }
+      .transaction-table {
+        width: 100%;
+        margin-top: 20px;
+        border-collapse: collapse;
+      }
+      .transaction-table th, .transaction-table td {
+        border: 1px solid #ddd;
+        padding: 10px;
+        text-align: left;
+        color: #000;
+      }
+      .transaction-table th {
+        background-color: #e8a1e0;
+      }
+    
+      /* Updated modal styles */
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.5);
+        padding-top: 60px;
+      }
+      .modal-content {
+        background-color: #fff;
+        margin: 5% auto;
+        padding: 20px;
+        border-radius: 8px;
+        width: 90%;
+        max-width: 500px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        color: #333;
+      }
+      .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid #ddd;
+        padding-bottom: 10px;
+        margin-bottom: 20px;
+      }
+      .modal-header h2 {
+        margin: 0;
+        font-size: 1.5em;
+        color: #e8a1e0;
+      }
+      .close {
+        color: #aaa;
+        font-size: 24px;
+        cursor: pointer;
+      }
+      .close:hover {
+        color: #000;
+      }
+      form {
+        display: grid;
+        gap: 15px;
+      }
+      label {
+        font-weight: 500;
+        color: #333;
+      }
+      input, select {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+      }
+      button[type="submit"] {
+        background-color: #e8a1e0;
+        color: #fff;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 4px;
+        font-size: 1em;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+      button[type="submit"]:hover {
+        background-color: #d47ac5;
+      }
     </style>
+    
   </head>
   <body>
     <h1>Expense Management System</h1>
@@ -198,9 +304,9 @@
   </body>
 </html>
 
-  -->
+ 
 
-  <!DOCTYPE html>
+  <!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
@@ -451,4 +557,4 @@
         loadTransactions();
     </script>
 </body>
-</html>
+</html> -->
