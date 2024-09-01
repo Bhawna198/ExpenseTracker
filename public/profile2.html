@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,16 +7,16 @@
     <title>Expense Management System</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <nav style="background-color: #333; padding: 10px;">
-        <a href="profile.html" style="color: white; margin-right: 20px;">Add Transaction</a>
-        <a href="profile2.html" style="color: white;">View Dashboard</a>
+    <nav style="background-color: #444; padding: 15px; text-align: center;">
+        <a href="profile.html" style="color: #ddd; margin-right: 20px; font-size: 16px; text-decoration: none;">Add Transaction</a>
+        <a href="profile2.html" style="color: #ddd; font-size: 16px; text-decoration: none;">View Dashboard</a>
     </nav>
     
     <style>
         body {
             font-family: 'Poppins', sans-serif;
-            background-color: #1a1a1a;
-            color: #fff;
+            background-color: #1e1e1e;
+            color: #f5f5f5;
             margin: 0;
             padding: 20px;
             text-align: center;
@@ -26,75 +27,79 @@
             grid-template-columns: repeat(2, 1fr);
             gap: 20px;
             max-width: 1200px;
-            margin: auto;
+            margin: 40px auto;
         }
 
         .box {
             background-color: #333;
-            padding: 20px;
-            border-radius: 8px;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s;
+        }
+
+        .box:hover {
+            transform: translateY(-5px);
         }
 
         .box h2 {
             margin-top: 0;
-            font-size: 20px;
-        }
-
-        .box .percentage {
             font-size: 24px;
-            font-weight: bold;
+            color: #f5f5f5;
+            border-bottom: 2px solid #444;
+            padding-bottom: 10px;
         }
 
         .percentage-circle {
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100px;
-            width: 100px;
+            height: 120px;
+            width: 120px;
             border-radius: 50%;
             background-color: #444;
             margin: 20px auto;
-            color: #fff;
+            color: #ddd;
+            font-size: 28px;
+            font-weight: bold;
         }
 
         .category {
             display: flex;
             justify-content: space-between;
-            margin-top: 10px;
+            margin-top: 15px;
+            color: #f5f5f5;
         }
 
         .category-bar {
-            width: 100%;
-            height: 10px;
+            width: 70%;
+            height: 12px;
             background-color: #555;
-            border-radius: 5px;
+            border-radius: 6px;
             margin-left: 10px;
         }
 
         .bar-fill {
-            height: 10px;
-            border-radius: 5px;
-        }
-
-        .category p {
-            margin: 0;
+            height: 12px;
+            border-radius: 6px;
         }
 
         .actions {
-            margin-top: 20px;
+            margin-top: 30px;
         }
 
         .actions button {
-            padding: 10px 20px;
-            background-color: #007bff;
+            padding: 12px 25px;
+            background-color: #2196F3;
             color: #fff;
             border: none;
-            border-radius: 5px;
+            border-radius: 6px;
             cursor: pointer;
+            transition: background-color 0.3s;
         }
 
         .actions button:hover {
-            background-color: #0056b3;
+            background-color: #1976D2;
         }
     </style>
 </head>
@@ -110,7 +115,7 @@
         <div class="box">
             <h2>Total Transactions: <span id="totalTransactions">0</span></h2>
             <div class="percentage-circle">
-                <div class="percentage" id="incomePercentage">0%</div>
+                <div id="incomePercentage">0%</div>
             </div>
             <p>Income: <span id="incomeCount">0</span></p>
             <p>Expense: <span id="expenseCount">0</span></p>
@@ -119,7 +124,7 @@
         <div class="box">
             <h2>Total Turnover: <span id="totalTurnover">0</span></h2>
             <div class="percentage-circle">
-                <div class="percentage" id="turnoverPercentage">0%</div>
+                <div id="turnoverPercentage">0%</div>
             </div>
             <p>Income: <span id="totalIncome">0</span></p>
             <p>Expense: <span id="totalExpense">0</span></p>
@@ -194,12 +199,12 @@
 
         function getCategoryColor(category) {
             const colors = {
-                'Salary': '#ffcc00',
-                'Food': '#00cc66',
-                'Utilities': '#00cccc',
-                'Other': '#cc0000'
+                'Salary': '#FFD700',
+                'Food': '#00FA9A',
+                'Utilities': '#1E90FF',
+                'Other': '#FF4500'
             };
-            return colors[category] || '#fff';
+            return colors[category] || '#888';
         }
 
         function resetFilter() {
