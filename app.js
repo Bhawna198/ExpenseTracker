@@ -7,12 +7,16 @@ const mongoose = require("mongoose");
 
 const PORT = 4070;
 
+
 // Database connection
 mongoose.connect("mongodb://localhost:27017/expenseTracker", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 }).then(() => console.log('Connected to MongoDB'))
   .catch(err => console.log('Error connecting to MongoDB:', err));
+
+
+
 
 // Middleware
 app.use(express.static(path.join(__dirname, "public")));
@@ -90,3 +94,4 @@ app.get("/logout", (req, res) => {
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
 });
+

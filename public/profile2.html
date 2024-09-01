@@ -7,16 +7,21 @@
     <title>Expense Management System</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <nav style="background-color: #444; padding: 15px; text-align: center;">
-        <a href="profile.html" style="color: #ddd; margin-right: 20px; font-size: 16px; text-decoration: none;">Add Transaction</a>
-        <a href="profile2.html" style="color: #ddd; font-size: 16px; text-decoration: none;">View Dashboard</a>
+    <nav style="background-color:#e8a1e0; padding: 10px;">
+        <a href="profile.html" style="color: white; margin-right: 20px;">Add Transaction</a>
+        <a href="profile2.html" style="color: white;">View Dashboard</a>
     </nav>
     
     <style>
         body {
+            background-image: url('images/4.jpg');
+            background-size: cover; /* This ensures the background covers the entire page */
+            background-position: center; /* Centers the background image */
+            background-repeat: no-repeat; /* Prevents the background image from repeating */
+            background-attachment: fixed; /* The background image stays fixed when scrolling */
             font-family: 'Poppins', sans-serif;
-            background-color: #1e1e1e;
-            color: #f5f5f5;
+            background-color: #e8a1e0;
+            color: #fff;
             margin: 0;
             padding: 20px;
             text-align: center;
@@ -27,79 +32,75 @@
             grid-template-columns: repeat(2, 1fr);
             gap: 20px;
             max-width: 1200px;
-            margin: 40px auto;
+            margin: auto;
         }
 
         .box {
-            background-color: #333;
-            padding: 25px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            transition: transform 0.2s;
-        }
-
-        .box:hover {
-            transform: translateY(-5px);
+            background-color: #d1a2cc;
+            padding: 20px;
+            border-radius: 8px;
         }
 
         .box h2 {
             margin-top: 0;
+            font-size: 20px;
+        }
+
+        .box .percentage {
             font-size: 24px;
-            color: #f5f5f5;
-            border-bottom: 2px solid #444;
-            padding-bottom: 10px;
+            font-weight: bold;
         }
 
         .percentage-circle {
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 120px;
-            width: 120px;
+            height: 100px;
+            width: 100px;
             border-radius: 50%;
-            background-color: #444;
+            background-color:#e8a1e0;
             margin: 20px auto;
-            color: #ddd;
-            font-size: 28px;
-            font-weight: bold;
+            color: #fff;
         }
 
         .category {
             display: flex;
             justify-content: space-between;
-            margin-top: 15px;
-            color: #f5f5f5;
+            margin-top: 10px;
         }
 
         .category-bar {
-            width: 70%;
-            height: 12px;
-            background-color: #555;
-            border-radius: 6px;
+            width: 100%;
+            height: 10px;
+            background-color: #e8a1e0;
+            border-radius: 5px;
             margin-left: 10px;
         }
 
         .bar-fill {
-            height: 12px;
-            border-radius: 6px;
+            height: 10px;
+            border-radius: 5px;
+        }
+
+        .category p {
+            margin: 0;
         }
 
         .actions {
-            margin-top: 30px;
+            margin-top: 20px;
         }
 
         .actions button {
-            padding: 12px 25px;
-            background-color: #2196F3;
+            padding: 10px 20px;
+            background-color: #cb3b83;
             color: #fff;
             border: none;
-            border-radius: 6px;
+            border-radius: 5px;
             cursor: pointer;
-            transition: background-color 0.3s;
         }
 
         .actions button:hover {
-            background-color: #1976D2;
+            background-color: #0056b3;
         }
     </style>
 </head>
@@ -115,7 +116,7 @@
         <div class="box">
             <h2>Total Transactions: <span id="totalTransactions">0</span></h2>
             <div class="percentage-circle">
-                <div id="incomePercentage">0%</div>
+                <div class="percentage" id="incomePercentage">0%</div>
             </div>
             <p>Income: <span id="incomeCount">0</span></p>
             <p>Expense: <span id="expenseCount">0</span></p>
@@ -124,7 +125,7 @@
         <div class="box">
             <h2>Total Turnover: <span id="totalTurnover">0</span></h2>
             <div class="percentage-circle">
-                <div id="turnoverPercentage">0%</div>
+                <div class="percentage" id="turnoverPercentage">0%</div>
             </div>
             <p>Income: <span id="totalIncome">0</span></p>
             <p>Expense: <span id="totalExpense">0</span></p>
@@ -199,12 +200,12 @@
 
         function getCategoryColor(category) {
             const colors = {
-                'Salary': '#FFD700',
-                'Food': '#00FA9A',
-                'Utilities': '#1E90FF',
-                'Other': '#FF4500'
+                'Salary': '#ffcc00',
+                'Food': '#00cc66',
+                'Utilities': '#00cccc',
+                'Other': '#cc0000'
             };
-            return colors[category] || '#888';
+            return colors[category] || '#fff';
         }
 
         function resetFilter() {
